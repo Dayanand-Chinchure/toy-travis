@@ -1,0 +1,30 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - IMAGE_NAME=dchinchure/travis-docker
+    - REGISTRY_USER=dchinchure
+    - REGISTRY_PASS=Dayanand@007
+
+before_install:
+  - curl -sL http://ibm.biz/idt-installer | bash 
+  - docker build --tag "$IMAGE_NAME" .
+  - docker login -u "$REGISTRY_USER" --password "$REGISTRY_PASS"
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+  - docker push "${IMAGE_NAME}:latest"
+
+script:
+  - docker ps -a
+  
+ after_success: 
+  - ibmcloud login -a https://api.au-syd.bluemix.net -u dayanand.chinchure@gslab.com -p Dayanand@007
+  - ibmcloud cr namespace-list
+  - docker pull dchinchure/travis-docker
+  - docker tag dchinchure/travis-docker registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
+  - docker push registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
+  - ibmcloud ks cluster-config jarvisCluster | tail -n1 > env_file
+  - `cat env_file`
+  - kubectl run toy --image=registry.su-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
+  - kubectl expose deployment/toy --type=NodePort --port=8080 --name=toy-service --target-port=8080
+  - kubectl describe service toy-service
