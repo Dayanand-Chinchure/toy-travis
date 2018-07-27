@@ -17,7 +17,7 @@ before_install:
 script:
   - docker ps -a
   
- after_success: 
+after_success: 
   - ibmcloud login -a https://api.au-syd.bluemix.net -u dayanand.chinchure@gslab.com -p Dayanand@007
   - ibmcloud cr namespace-list
   - docker pull dchinchure/travis-docker
