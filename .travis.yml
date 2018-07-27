@@ -19,7 +19,7 @@ script:
   - docker tag dchinchure/travis-docker registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
   - docker push registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
   - ibmcloud ks cluster-config jarvisCluster | tail -n1 > env_file
-  - `cat env_file`
+  - eval `cat env_file`
   - kubectl run toy --image=registry.su-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
   - kubectl expose deployment/toy --type=NodePort --port=8080 --name=toy-service --target-port=8080
   - kubectl describe service toy-service
