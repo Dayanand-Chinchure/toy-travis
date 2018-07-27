@@ -19,6 +19,7 @@ script:
   - docker tag dchinchure/travis-docker registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
   - ibmcloud login -a https://api.au-syd.bluemix.net -u dayanand.chinchure@gslab.com -p Dayanand@007
   - docker push registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
+  - sleep 60
   - ibmcloud ks cluster-config jarvisCluster | tail -n1 > env_file
   - eval `cat env_file`
   - kubectl run toy --image=registry.su-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
