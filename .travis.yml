@@ -4,8 +4,6 @@ services:
 env:
   global:
     - IMAGE_NAME=dchinchure/travis-docker
-    - REGISTRY_USER=dchinchure
-    - REGISTRY_PASS=Dayanand@007
 
 script:
   - docker build --tag "$IMAGE_NAME" .
