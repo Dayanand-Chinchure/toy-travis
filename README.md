@@ -1,1 +1,1 @@
-This is toy travis project.
+This is toy travis project
