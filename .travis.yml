@@ -12,14 +12,8 @@ script:
   - docker login -u "$REGISTRY_USER" --password "$REGISTRY_PASS"
   - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
   - docker push "${IMAGE_NAME}:latest"
-  - curl -sL http://ibm.biz/idt-installer | bash 
-  - ibmcloud login -a "$BLUEMIX_SERVER" -u "$BLUEMIX_USER" -p "$BLUEMIX_PASS"
-  - ibmcloud cr namespace-list
   - docker pull dchinchure/travis-docker
-  - docker tag dchinchure/travis-docker registry.au-syd.bluemix.net/jarvisnamespace/dchinchure/jarvis-docker
-  - ibmcloud login -a "$BLUEMIX_SERVER" -u "$BLUEMIX_USER" -p "$BLUEMIX_PASS"
-  - ibmcloud ks cluster-config jarvisCluster | tail -n1 > env_file
-  - eval `cat env_file`
+  - export KUBECONFIG=mykubeconfig
   - kubectl run toy --image=dchinchure/travis-docker
   - kubectl expose deployment/toy --type=NodePort --port=8080 --name=toy-service --target-port=8080
   - kubectl describe service toy-service
