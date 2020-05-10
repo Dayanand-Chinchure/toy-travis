@@ -20,6 +20,7 @@ script:
   - docker push "${IMAGE_NAME}:latest"
   - docker pull dchinchure/travis-docker
   - export KUBECONFIG=mykubeconfig
+  - kubectl delete pod toy
   - kubectl run toy --image=dchinchure/travis-docker
   - kubectl expose pod/toy --type=NodePort --port=8080 --name=toy-service --target-port=8080
   - kubectl describe service toy-service
