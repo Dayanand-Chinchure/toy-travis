@@ -8,7 +8,7 @@ const HOST = '0.0.0.0';
 
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Dayanand Chinchure PUCSD Batch - 13 \n');
+  res.send('Dayanand Chinchure PUCSD Batch -13 is best\n');
 });
 
 app.listen(PORT, HOST);
